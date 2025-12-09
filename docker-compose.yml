@@ -1,0 +1,24 @@
+services:
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: waybills_db
+    volumes:
+      - data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  web:
+    build: .
+    environment:
+      FLASK_APP: app.py
+    command: flask run
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+volumes:
+  data:
