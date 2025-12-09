@@ -12,3 +12,7 @@ migrations/*.pyc
 migrations/*~*
 *.log
 logs
+
+!.docker-compose.yml
+!.Dockerfile
+!migrations
