@@ -1,3 +1,7 @@
+CREATE DATABASE waybills_db;
+CREATE USER admin WITH PASSWORD 'secret';
+GRANT ALL PRIVILEGES ON DATABASE waybills_db TO admin;
+
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     login TEXT UNIQUE NOT NULL,
