@@ -18,7 +18,6 @@ EXECUTE FUNCTION check_driver_role();
 CREATE OR REPLACE FUNCTION check_availability()
 RETURNS TRIGGER AS $$
 BEGIN
-    -- Проверка водителя: не может быть другого созданного путевого листа на эту дату
     IF EXISTS (
         SELECT 1 FROM waybills w
         WHERE w.user_id = NEW.user_id
@@ -29,7 +28,6 @@ BEGIN
         RAISE EXCEPTION 'Водитель уже имеет активный путевой лист на эту дату';
     END IF;
     
-    -- Проверка ТС: не может быть другого созданного путевого листа на эту дату
     IF EXISTS (
         SELECT 1 FROM waybills w
         WHERE w.vehicle_id = NEW.vehicle_id
@@ -44,7 +42,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Триггер работает при INSERT и UPDATE (чтобы нельзя было изменить статус на created если уже есть активный)
 CREATE TRIGGER trg_check_availability
 BEFORE INSERT OR UPDATE ON waybills
 FOR EACH ROW
